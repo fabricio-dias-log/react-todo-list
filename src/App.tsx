@@ -1,9 +1,14 @@
 import React from 'react';
+// Components
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      <h1>React ToDo list App</h1>
+    <div>
+      <Header/>
+      <h1>Content...</h1>
+      <Footer/>
     </div>
   );
 }
