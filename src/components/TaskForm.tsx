@@ -7,28 +7,40 @@ import styles from './TaskForm.module.css';
 
 interface Props {
     btnText: string;
+    task?: ITask | null;
     taskList: ITask[];
     setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>;
+    handleUpdate?(id: number, title: string, difficulty: number): void;
 }
 
-const TaskForm = ({btnText, taskList, setTaskList}: Props) => {
+const TaskForm = ({btnText, taskList, setTaskList, task, handleUpdate}: Props) => {
     const [id, setId] = useState<number>(0);
     const [title, setTitle] = useState<string>('');
     const [difficulty, setDifficulty] = useState<number>(0);
 
+    useEffect(() => {
+        if(task){
+            setId(task.id);
+            setTitle(task.title);
+            setDifficulty(task.difficulty);
+        }
+    }, [task]);
+
     const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        setId(Math.floor(Math.random() * 1000));
+        if(handleUpdate){
+            handleUpdate(id, title, difficulty);
+        } else {
+            setId(Math.floor(Math.random() * 1000));
 
-        const newTask: ITask = {id, title, difficulty};
+            const newTask: ITask = {id, title, difficulty};
 
-        setTaskList!([...taskList, newTask]);
+            setTaskList!([...taskList, newTask]);
 
-        setTitle('');
-        setDifficulty(0);
-
-        console.log(taskList);
+            setTitle('');
+            setDifficulty(0);
+        }
         
     };
 
