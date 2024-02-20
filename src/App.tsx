@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div>
-      <Modal/>
+      <Modal children={<TaskForm btnText='Editar Tarefa' taskList={tasksList} />}/>
       <Header/>
       <main className={styles.main}>
       <div>
