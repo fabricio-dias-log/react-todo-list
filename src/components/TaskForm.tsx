@@ -7,14 +7,23 @@ import styles from './TaskForm.module.css';
 
 interface Props {
     btnText: string;
+    task?: ITask | null;
     taskList: ITask[];
     setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>;
 }
 
-const TaskForm = ({btnText, taskList, setTaskList}: Props) => {
+const TaskForm = ({btnText, taskList, setTaskList, task}: Props) => {
     const [id, setId] = useState<number>(0);
     const [title, setTitle] = useState<string>('');
     const [difficulty, setDifficulty] = useState<number>(0);
+
+    useEffect(() => {
+        if(task){
+            setId(task.id);
+            setTitle(task.title);
+            setDifficulty(task.difficulty);
+        }
+    }, [task]);
 
     const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,9 +36,6 @@ const TaskForm = ({btnText, taskList, setTaskList}: Props) => {
 
         setTitle('');
         setDifficulty(0);
-
-        console.log(taskList);
-        
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

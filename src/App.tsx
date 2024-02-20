@@ -13,6 +13,7 @@ import styles from './App.module.css';
 
 function App() {
   const [tasksList, setTasksList] = useState<ITask[]>([]);
+  const [taskToUpdate, setTaskToUpdate] = useState<ITask | null>(null);
 
   const deleteTask = (id: number) => {
     setTasksList(tasksList.filter(task => task.id !== id));
@@ -28,14 +29,15 @@ function App() {
     }
   }
 
-  const editTask = (): void => {
+  const editTask = (task: ITask): void => {
     hideOrShowModal(true);
+    setTaskToUpdate(task);
   
   }
 
   return (
     <div>
-      <Modal children={<TaskForm btnText='Editar Tarefa' taskList={tasksList} />}/>
+      <Modal children={<TaskForm btnText='Editar Tarefa' task={taskToUpdate} taskList={tasksList} />}/>
       <Header/>
       <main className={styles.main}>
       <div>
